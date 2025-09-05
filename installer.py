@@ -123,7 +123,7 @@ class InstallerGUI:
         
         # Portable option
         portable_frame = tk.Frame(type_container, bg="#f8f9fa")
-        portable_frame.pack(fill="x", pady=(0, 15))
+        portable_frame.pack(fill="x", pady=(0, 20))
         
         portable_radio = tk.Radiobutton(
             portable_frame,
@@ -138,7 +138,7 @@ class InstallerGUI:
             activeforeground="#2c3e50",
             command=self.on_install_type_change
         )
-        portable_radio.pack(anchor="w")
+        portable_radio.pack(anchor="w", pady=(0, 8))
         
         portable_desc = tk.Label(
             portable_frame,
@@ -148,11 +148,11 @@ class InstallerGUI:
             fg="#7f8c8d",
             justify="left"
         )
-        portable_desc.pack(anchor="w", padx=(25, 0), pady=(5, 0))
+        portable_desc.pack(anchor="w", padx=(25, 0), pady=(0, 10))
         
         # Full installation option
         full_frame = tk.Frame(type_container, bg="#f8f9fa")
-        full_frame.pack(fill="x", pady=(0, 5))
+        full_frame.pack(fill="x", pady=(0, 10))
         
         full_radio = tk.Radiobutton(
             full_frame,
@@ -167,7 +167,7 @@ class InstallerGUI:
             activeforeground="#2c3e50",
             command=self.on_install_type_change
         )
-        full_radio.pack(anchor="w")
+        full_radio.pack(anchor="w", pady=(0, 8))
         
         full_desc = tk.Label(
             full_frame,
@@ -177,7 +177,7 @@ class InstallerGUI:
             fg="#7f8c8d",
             justify="left"
         )
-        full_desc.pack(anchor="w", padx=(25, 0), pady=(5, 0))
+        full_desc.pack(anchor="w", padx=(25, 0), pady=(0, 10))
     
     def create_path_section(self, parent):
         """Create installation path section."""
@@ -208,7 +208,7 @@ class InstallerGUI:
         
         # Path input frame
         path_input_frame = tk.Frame(path_container, bg="#f8f9fa")
-        path_input_frame.pack(fill="x", pady=(0, 10))
+        path_input_frame.pack(fill="x", pady=(0, 15))
         
         # Path label
         path_label = tk.Label(
@@ -218,11 +218,11 @@ class InstallerGUI:
             bg="#f8f9fa",
             fg="#34495e"
         )
-        path_label.pack(anchor="w", pady=(0, 8))
+        path_label.pack(anchor="w", pady=(0, 10))
         
         # Entry and button frame
         entry_button_frame = tk.Frame(path_input_frame, bg="#f8f9fa")
-        entry_button_frame.pack(fill="x")
+        entry_button_frame.pack(fill="x", pady=(0, 10))
         
         # Path entry
         self.path_entry = tk.Entry(
@@ -264,7 +264,7 @@ class InstallerGUI:
             wraplength=500,
             justify="left"
         )
-        path_desc.pack(anchor="w", pady=(10, 0))
+        path_desc.pack(anchor="w", pady=(15, 0))
         
         # Set default path
         self.set_default_path()
@@ -298,7 +298,7 @@ class InstallerGUI:
         
         # Desktop shortcut
         desktop_frame = tk.Frame(options_container, bg="#f8f9fa")
-        desktop_frame.pack(fill="x", pady=(0, 12))
+        desktop_frame.pack(fill="x", pady=(0, 15))
         
         desktop_check = tk.Checkbutton(
             desktop_frame,
@@ -311,7 +311,7 @@ class InstallerGUI:
             activebackground="#f8f9fa",
             activeforeground="#2c3e50"
         )
-        desktop_check.pack(anchor="w")
+        desktop_check.pack(anchor="w", pady=(0, 8))
         
         desktop_desc = tk.Label(
             desktop_frame,
@@ -320,11 +320,11 @@ class InstallerGUI:
             bg="#f8f9fa",
             fg="#7f8c8d"
         )
-        desktop_desc.pack(anchor="w", padx=(25, 0))
+        desktop_desc.pack(anchor="w", padx=(25, 0), pady=(0, 10))
         
         # Start Menu shortcut
         startmenu_frame = tk.Frame(options_container, bg="#f8f9fa")
-        startmenu_frame.pack(fill="x", pady=(0, 12))
+        startmenu_frame.pack(fill="x", pady=(0, 15))
         
         startmenu_check = tk.Checkbutton(
             startmenu_frame,
@@ -337,7 +337,7 @@ class InstallerGUI:
             activebackground="#f8f9fa",
             activeforeground="#2c3e50"
         )
-        startmenu_check.pack(anchor="w")
+        startmenu_check.pack(anchor="w", pady=(0, 8))
         
         startmenu_desc = tk.Label(
             startmenu_frame,
@@ -346,7 +346,7 @@ class InstallerGUI:
             bg="#f8f9fa",
             fg="#7f8c8d"
         )
-        startmenu_desc.pack(anchor="w", padx=(25, 0))
+        startmenu_desc.pack(anchor="w", padx=(25, 0), pady=(0, 10))
     
     def create_buttons(self, parent):
         """Create action buttons."""
