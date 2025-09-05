@@ -1,199 +1,202 @@
 #!/usr/bin/env python3
 """
-Script to create GitHub release for Git Account Manager Pro.
+Script to create a new release for Git Account Manager Pro.
+This script helps prepare files for GitHub release.
 """
 
 import os
 import sys
+import shutil
 import subprocess
-import json
 from pathlib import Path
+import json
 
-def get_git_remote_url():
-    """Get the GitHub repository URL."""
+def get_version():
+    """Get current version from VERSION.txt"""
     try:
-        result = subprocess.run(
-            ["git", "config", "--get", "remote.origin.url"],
-            capture_output=True,
-            text=True,
-            check=True
-        )
-        return result.stdout.strip()
-    except subprocess.CalledProcessError:
-        return None
+        with open("VERSION.txt", 'r') as f:
+            return f.read().strip()
+    except FileNotFoundError:
+        return "2.1.0"
 
-def get_current_version():
-    """Get current version from git tags."""
-    try:
-        result = subprocess.run(
-            ["git", "describe", "--tags", "--abbrev=0"],
-            capture_output=True,
-            text=True,
-            check=True
-        )
-        return result.stdout.strip()
-    except subprocess.CalledProcessError:
-        return "v2.1.0"  # Default version
-
-def create_git_tag(version):
-    """Create a git tag for the release."""
-    try:
-        # Check if tag already exists
-        result = subprocess.run(
-            ["git", "tag", "-l", version],
-            capture_output=True,
-            text=True
-        )
-        
-        if result.stdout.strip():
-            print(f"⚠️ Tag {version} already exists")
-            return True
-        
-        # Create and push tag
-        subprocess.run(["git", "tag", "-a", version, "-m", f"Release {version}"], check=True)
-        subprocess.run(["git", "push", "origin", version], check=True)
-        print(f"✅ Tag {version} created and pushed")
-        return True
-        
-    except subprocess.CalledProcessError as e:
-        print(f"❌ Failed to create tag: {e}")
-        return False
-
-def create_github_release():
-    """Create GitHub release using GitHub CLI or manual instructions."""
-    print("📋 GitHub Release Instructions:")
-    print("=" * 50)
+def create_release_package():
+    """Create release package for GitHub."""
+    version = get_version()
+    print(f"🚀 Creating release package for version {version}")
     
-    # Get repository info
-    remote_url = get_git_remote_url()
-    if remote_url:
-        if "github.com" in remote_url:
-            repo_name = remote_url.split("/")[-1].replace(".git", "")
-            print(f"📁 Repository: {repo_name}")
-        else:
-            print("⚠️ Not a GitHub repository")
+    # Create release directory
+    release_dir = Path(f"GitAccountManagerPro-v{version}")
+    if release_dir.exists():
+        shutil.rmtree(release_dir)
+    release_dir.mkdir()
+    
+    # Copy main executable
+    if Path("GitAccountManagerPro.exe").exists():
+        shutil.copy2("GitAccountManagerPro.exe", release_dir / "GitAccountManagerPro.exe")
+        print("✅ Main executable copied")
     else:
-        print("⚠️ No remote repository found")
+        print("❌ GitAccountManagerPro.exe not found!")
+        return False
     
-    version = "v2.1.0"
+    # Copy documentation
+    docs = ["README.md", "RELEASE_NOTES.md", "LICENSE.txt", "VERSION.txt"]
+    for doc in docs:
+        if Path(doc).exists():
+            shutil.copy2(doc, release_dir / doc)
+            print(f"✅ {doc} copied")
     
-    print(f"\n🏷️ Version: {version}")
-    print(f"📅 Release Date: September 6, 2025")
+    # Copy run script
+    run_script = """@echo off
+title Git Account Manager Pro - Launcher
+echo.
+echo ========================================
+echo  Git Account Manager Pro v{version}
+echo  Professional Git Account Management
+echo ========================================
+echo.
+echo Starting application...
+echo.
+
+REM Check if executable exists
+if not exist "GitAccountManagerPro.exe" (
+    echo ERROR: GitAccountManagerPro.exe not found!
+    echo Please ensure the executable is in the same folder.
+    echo.
+    pause
+    exit /b 1
+)
+
+REM Run the application
+echo Launching Git Account Manager Pro...
+echo.
+start "" "GitAccountManagerPro.exe"
+
+if errorlevel 1 (
+    echo.
+    echo ERROR: Failed to start the application.
+    echo Please check if you have the required permissions.
+    echo.
+    pause
+    exit /b 1
+)
+
+echo Application started successfully!
+echo You can close this window now.
+echo.
+timeout /t 3 /nobreak >nul
+exit /b 0
+""".format(version=version)
     
-    print("\n📝 Release Title:")
-    print("Git Account Manager Pro v2.1.0 - Multi-Language Support")
+    with open(release_dir / "run.bat", 'w', encoding='utf-8') as f:
+        f.write(run_script)
+    print("✅ run.bat created")
     
-    print("\n📄 Release Description:")
-    print("""
-## 🌐 New Features
+    # Create download README
+    download_readme = f"""# 🚀 Git Account Manager Pro v{version}
 
-### Multi-Language Support
-- **English** 🇺🇸 - Full English language support
-- **Bahasa Indonesia** 🇮🇩 - Complete Indonesian language support
-- **Language Switcher** - Easy language switching with flag icons
-- **Persistent Language Settings** - Language preference is saved and remembered
+**Professional Git Account Management Tool - Download & Run**
 
-### Enhanced User Interface
-- Language switcher buttons with country flags
-- Consistent styling with existing theme system
-- Real-time language switching (requires app restart)
-- Improved user experience with visual language indicators
+## 📥 **Cara Download & Install**
 
-## 🔧 Technical Improvements
+### **Metode 1: Download Langsung (Recommended)**
+1. **Klik** tombol "Download" di bawah
+2. **Save** file `GitAccountManagerPro.exe` ke komputer Anda
+3. **Double-click** file untuk menjalankan program
+4. **Selesai!** Program langsung berjalan tanpa perlu install
 
-### New Components Added
-- `LanguageManager` - Centralized language management system
-- `Translation System` - Comprehensive translation framework
-- `Language Configuration` - Persistent language settings storage
-- `UI Language Components` - Reusable language switcher components
+## 🎯 **Fitur Utama**
 
-## 📦 Downloads
+- ✅ **Multi-Account Management** - Kelola multiple akun Git
+- ✅ **Auto Configuration** - Konfigurasi Git otomatis
+- ✅ **Multi-Language** - English & Bahasa Indonesia
+- ✅ **Portable** - Tidak perlu install, jalan dari folder manapun
+- ✅ **Secure** - Data tersimpan lokal, aman dan private
 
-### Windows Executable
-- **GitAccountManagerPro.exe** - Standalone executable (no installation required)
-- **run.bat** - Easy execution script
-- **VERSION.txt** - Version and feature information
+## 📋 **System Requirements**
 
-### Source Code
-- Complete source code with all language features
-- Python 3.7+ compatible
-- All dependencies listed in requirements.txt
+- **Windows 10/11** (64-bit recommended)
+- **Git** (untuk fitur manajemen akun)
+- **Tidak perlu Python** (sudah dikompilasi)
 
-## 🚀 Installation
+## 🚀 **Quick Start**
 
-### For Executable Users:
-1. Download the release files
-2. Extract to desired location
-3. Run `GitAccountManagerPro.exe` or `run.bat`
-4. No additional setup required
+1. **Download** `GitAccountManagerPro.exe`
+2. **Run** program dengan double-click
+3. **Add Account** - Klik "Add Account" untuk menambah akun Git
+4. **Configure** - Isi nama, email, dan username
+5. **Switch** - Klik akun untuk beralih ke akun tersebut
 
-### For Developers:
-1. Clone the repository
-2. Install dependencies: `pip install -r requirements.txt`
-3. Run: `python main.py`
+## 🌐 **Language Support**
 
-## 🔄 System Requirements
-- Windows 10/11 (for executable)
-- Python 3.7+ (for source code)
-- Git (for account management features)
+- **🇺🇸 English** - Full English language support
+- **🇮🇩 Bahasa Indonesia** - Complete Indonesian language support
 
-## 📋 What's New
-- Complete Indonesian language support
-- Language switcher with flag icons
-- Persistent language preferences
-- Enhanced user interface
-- Improved error handling
-- Better user feedback
+## 🔧 **Troubleshooting**
 
-## 🐛 Bug Fixes
-- Improved error message handling
-- Better user feedback for language switching
-- Enhanced configuration file management
-- More robust translation fallback system
+### **Program Tidak Jalan:**
+- Pastikan **Windows 10/11**
+- **Run as Administrator** (klik kanan → Run as administrator)
+- Check **antivirus** (mungkin diblokir)
 
-## 📞 Support
-For issues, feature requests, or questions, please visit the GitHub repository.
-""")
+### **Git Tidak Terdeteksi:**
+- Install **Git** dari [git-scm.com](https://git-scm.com/)
+- Restart program setelah install Git
+
+## 📞 **Support & Help**
+
+- **GitHub Issues**: [Report Bug](https://github.com/your-username/git-account-manager-pro/issues)
+- **Documentation**: [Full Guide](https://github.com/your-username/git-account-manager-pro/wiki)
+
+## 📄 **License**
+
+This software is licensed under the **MIT License**. See LICENSE.txt for details.
+
+---
+
+**Git Account Manager Pro v{version}** - Professional Git Account Management Made Easy! 🚀
+"""
     
-    print("\n📁 Files to Upload:")
-    print("- GitAccountManagerPro.exe (Windows executable)")
-    print("- run.bat (Execution script)")
-    print("- VERSION.txt (Version information)")
-    print("- Source code (zip)")
+    with open(release_dir / "README.md", 'w', encoding='utf-8') as f:
+        f.write(download_readme)
+    print("✅ Download README created")
     
-    print("\n🔗 Manual Release Creation:")
-    print("1. Go to your GitHub repository")
-    print("2. Click 'Releases' → 'Create a new release'")
-    print("3. Create tag: v2.1.0")
-    print("4. Use the title and description above")
-    print("5. Upload the files from the 'release' folder")
-    print("6. Mark as 'Latest release'")
-    print("7. Publish the release")
+    # Create zip file
+    zip_name = f"GitAccountManagerPro-v{version}.zip"
+    shutil.make_archive(f"GitAccountManagerPro-v{version}", 'zip', release_dir)
+    print(f"✅ {zip_name} created")
     
-    return True
+    # Cleanup
+    shutil.rmtree(release_dir)
+    
+    return zip_name
 
 def main():
-    """Main release creation process."""
+    """Main function."""
     print("🚀 Git Account Manager Pro - Release Creator")
     print("=" * 50)
     
-    # Check if we're in a git repository
-    if not Path(".git").exists():
-        print("❌ Not in a git repository")
+    # Check if executable exists
+    if not Path("GitAccountManagerPro.exe").exists():
+        print("❌ GitAccountManagerPro.exe not found!")
+        print("Please build the executable first using build_exe.py")
         return 1
     
-    # Create git tag
-    version = "v2.1.0"
-    if not create_git_tag(version):
-        print("⚠️ Continuing without git tag...")
-    
-    # Create GitHub release instructions
-    create_github_release()
-    
-    print("\n✅ Release preparation completed!")
-    print("📋 Follow the instructions above to create the GitHub release")
-    
-    return 0
+    try:
+        # Create release package
+        zip_name = create_release_package()
+        
+        print(f"\n🎉 Release package created successfully!")
+        print(f"📦 Package: {zip_name}")
+        print(f"\n📋 Next steps:")
+        print(f"1. Upload {zip_name} to GitHub Releases")
+        print(f"2. Or use GitHub Actions for automatic release")
+        print(f"3. Share the download link with users")
+        
+        return 0
+        
+    except Exception as e:
+        print(f"❌ Error creating release package: {e}")
+        return 1
 
 if __name__ == "__main__":
     exit_code = main()

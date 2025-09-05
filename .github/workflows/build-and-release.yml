@@ -1,0 +1,85 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pyinstaller
+        
+    - name: Build executable
+      run: |
+        python build_exe.py
+        
+    - name: Create release package
+      run: |
+        python create_packages.py
+        
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: GitAccountManagerPro-v${{ github.ref_name }}
+        path: |
+          GitAccountManagerPro.exe
+          releases/
+          *.zip
+          
+    - name: Create Release
+      if: startsWith(github.ref, 'refs/tags/')
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          GitAccountManagerPro.exe
+          releases/GitAccountManagerPro.exe
+          releases/README.md
+          releases/run.bat
+          releases/LICENSE.txt
+          releases/RELEASE_NOTES.md
+        body: |
+          ## 🚀 Git Account Manager Pro ${{ github.ref_name }}
+          
+          ### 📥 Download & Install
+          1. Download `GitAccountManagerPro.exe` from the assets below
+          2. Double-click to run (no installation required)
+          3. Start managing your Git accounts!
+          
+          ### ✨ What's New
+          - Multi-account Git management
+          - Automatic Git configuration
+          - Multi-language support (English & Indonesian)
+          - Portable - no installation required
+          
+          ### 📋 System Requirements
+          - Windows 10/11 (64-bit)
+          - Git (for account management features)
+          
+          ### 🎯 Quick Start
+          1. Run the executable
+          2. Click "Add Account" to add your Git accounts
+          3. Click on any account to switch to it
+          4. Enjoy seamless Git account management!
+          
+          ---
+          **Download the executable and start using it immediately!** 🎉
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

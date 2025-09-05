@@ -1,16 +1,8 @@
-# Git Account Manager Pro - Git Ignore File
-
-# Secure data directory - contains sensitive account information
-data/
-*.json
-
-# Python cache files
+# Python
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
-
-# Distribution / packaging
 .Python
 build/
 develop-eggs/
@@ -27,6 +19,7 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+MANIFEST
 
 # PyInstaller
 *.manifest
@@ -106,14 +99,14 @@ venv.bak/
 .dmypy.json
 dmypy.json
 
-# IDE files
+# IDE
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
 
-# OS generated files
+# OS
 .DS_Store
 .DS_Store?
 ._*
@@ -122,12 +115,18 @@ dmypy.json
 ehthumbs.db
 Thumbs.db
 
-# Backup files
-*.backup
-*.bak
-*.tmp
+# Project specific
+data/accounts.json
+*.exe
+!releases/*.exe
+*.zip
+*.tar.gz
 
-# Test files
-test_*.py
-debug_*.py
-quick_test.py
+# Build artifacts
+build/
+dist/
+*.spec
+
+# Temporary files
+*.tmp
+*.temp

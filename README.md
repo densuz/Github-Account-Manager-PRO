@@ -1,6 +1,22 @@
-# Git Account Manager Pro v2.0.0
+# 🚀 Git Account Manager Pro v2.1.0
+
+**Professional Git Account Management Tool - Download & Run**
 
 A professional Git account management tool with modular architecture that allows you to easily manage multiple GitHub accounts and switch between them seamlessly.
+
+## 📥 **Download & Install**
+
+### **🎯 Quick Download (Recommended)**
+[![Download](https://img.shields.io/badge/Download-GitAccountManagerPro.exe-blue?style=for-the-badge&logo=download)](https://github.com/your-username/git-account-manager-pro/releases/latest/download/GitAccountManagerPro.exe)
+
+1. **Click** the download button above
+2. **Save** `GitAccountManagerPro.exe` to your computer
+3. **Double-click** to run (no installation required!)
+4. **Start** managing your Git accounts immediately
+
+### **📦 Alternative Download Methods**
+- **GitHub Releases**: [Latest Release](https://github.com/your-username/git-account-manager-pro/releases/latest)
+- **Source Code**: Clone this repository for development
 
 ## 🚀 Features
 
@@ -14,8 +30,15 @@ A professional Git account management tool with modular architecture that allows
 - **Validation**: Comprehensive input validation for all account data
 - **Modular Architecture**: Clean, maintainable code structure
 
-## 📋 Requirements
+## 📋 System Requirements
 
+### **For End Users (Download & Run)**
+- ✅ **Windows 10/11** (64-bit recommended)
+- ✅ **Git** (for account management features)
+- ❌ **No Python required** (executable is pre-compiled)
+- ❌ **No installation required** (portable application)
+
+### **For Developers (Source Code)**
 - **Python 3.6+** (required for f-strings and type hints)
 - **Git** (must be installed and accessible from command line)
 - **Tkinter** (usually included with Python)
