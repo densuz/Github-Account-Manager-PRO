@@ -6,7 +6,8 @@ Constants and configuration values for Git Account Manager Pro.
 CONFIG_FILES = {
     'accounts': 'data/accounts.json',
     'current_profile': 'data/.git_current_profile',
-    'theme_config': 'data/theme_config.json'
+    'theme_config': 'data/theme_config.json',
+    'language_config': 'data/language_config.json'
 }
 
 # Theme definitions
@@ -52,9 +53,24 @@ THEMES = {
 # Application settings
 APP_SETTINGS = {
     'default_theme': 'dark',
+    'default_language': 'en',
     'window_size': '650x600',
     'min_window_size': (600, 500),
     'command_timeout': 30
+}
+
+# Language definitions
+LANGUAGES = {
+    'en': {
+        'name': 'English',
+        'flag': '🇺🇸',
+        'icon': '🌐'
+    },
+    'id': {
+        'name': 'Bahasa Indonesia',
+        'flag': '🇮🇩',
+        'icon': '🇮🇩'
+    }
 }
 
 # Git configuration defaults

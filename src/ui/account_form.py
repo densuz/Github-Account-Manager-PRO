@@ -13,23 +13,31 @@ class AccountForm:
     
     def __init__(self, parent, theme_colors: Dict[str, str], 
                  on_save: Callable, on_cancel: Callable,
-                 edit_data: Optional[Dict[str, Any]] = None):
+                 edit_data: Optional[Dict[str, Any]] = None,
+                 language_manager=None):
         self.parent = parent
         self.theme_colors = theme_colors
         self.on_save = on_save
         self.on_cancel = on_cancel
         self.edit_data = edit_data
         self.is_edit = edit_data is not None
+        self.language_manager = language_manager
         
         self.dialog = None
         self.entries = {}
         
         self.create_dialog()
     
+    def translate(self, key: str) -> str:
+        """Get translation for a key."""
+        if self.language_manager:
+            return self.language_manager.translate(key)
+        return key
+    
     def create_dialog(self) -> None:
         """Create the account form dialog."""
         self.dialog = tk.Toplevel(self.parent)
-        self.dialog.title("✏️ Edit Akun" if self.is_edit else "➕ Tambah Akun Baru")
+        self.dialog.title(f"✏️ {self.translate('edit_account_title')}" if self.is_edit else f"➕ {self.translate('add_account_title')}")
         self.dialog.geometry("450x550")
         self.dialog.configure(bg=self.theme_colors["bg_primary"])
         self.dialog.resizable(False, False)

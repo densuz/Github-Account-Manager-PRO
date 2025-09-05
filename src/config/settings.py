@@ -110,6 +110,9 @@ class ConfigManager:
     def __init__(self):
         self.theme_manager = ThemeManager()
         self.settings = APP_SETTINGS.copy()
+        # Import language manager here to avoid circular imports
+        from ..core.language_manager import LanguageManager
+        self.language_manager = LanguageManager()
     
     def get_setting(self, key: str, default: Any = None) -> Any:
         """Get a configuration setting."""
@@ -123,6 +126,11 @@ class ConfigManager:
         """Get the theme manager instance."""
         return self.theme_manager
     
+    def get_language_manager(self):
+        """Get the language manager instance."""
+        return self.language_manager
+    
     def initialize(self) -> None:
-        """Initialize configuration by loading theme settings."""
+        """Initialize configuration by loading theme and language settings."""
         self.theme_manager.load_theme_config()
+        self.language_manager.initialize()

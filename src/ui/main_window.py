@@ -28,6 +28,7 @@ class MainWindow:
         # Initialize configuration
         self.config_manager.initialize()
         self.theme_colors = self.config_manager.get_theme_manager().get_theme_colors()
+        self.language_manager = self.config_manager.get_language_manager()
         
         self.create_window()
     
@@ -88,7 +89,7 @@ class MainWindow:
         
         header = tk.Label(
             title_frame,
-            text="Git Account Manager Pro",
+            text=self.language_manager.translate("app_title"),
             font=("Segoe UI", 20, "bold"),
             bg=self.theme_colors["bg_secondary"],
             fg=self.theme_colors["text_primary"]
@@ -98,15 +99,16 @@ class MainWindow:
         # Subtitle
         subtitle = tk.Label(
             header_frame,
-            text="Kelola akun GitHub Anda dengan mudah dan profesional",
+            text=self.language_manager.translate("app_subtitle"),
             font=("Segoe UI", 10),
             bg=self.theme_colors["bg_secondary"],
             fg=self.theme_colors["text_secondary"]
         )
         subtitle.pack(pady=(0, 10))
         
-        # Theme switcher - create directly in header
+        # Theme and language switchers - create directly in header
         self.create_theme_switcher_simple(header_frame)
+        self.create_language_switcher_simple(header_frame)
     
     def create_theme_switcher_simple(self, parent) -> None:
         """Create simple theme switcher component."""
@@ -171,6 +173,57 @@ class MainWindow:
         system_btn.pack(side="left", padx=(0, 12))
         
         print("🎨 Theme switcher buttons created successfully!")
+    
+    def create_language_switcher_simple(self, parent) -> None:
+        """Create simple language switcher component."""
+        # Create language frame
+        language_frame = tk.Frame(parent, bg=self.theme_colors["bg_secondary"])
+        language_frame.pack(pady=(0, 15))
+        
+        # Language label
+        language_label = tk.Label(
+            language_frame,
+            text="🌐 Bahasa:",
+            font=("Segoe UI", 10, "bold"),
+            bg=self.theme_colors["bg_secondary"],
+            fg=self.theme_colors["text_secondary"]
+        )
+        language_label.pack(side="left", padx=(0, 15))
+        
+        # Language buttons - simple implementation
+        current_lang = self.language_manager.get_current_language()
+        
+        en_btn = tk.Button(
+            language_frame,
+            text="🇺🇸 English",
+            command=lambda: self.switch_language("en"),
+            bg="#89b4fa" if current_lang == "en" else self.theme_colors["bg_tertiary"],
+            fg="#1e1e2e" if current_lang == "en" else self.theme_colors["text_secondary"],
+            relief="flat",
+            bd=0,
+            font=("Segoe UI", 9, "bold"),
+            padx=12,
+            pady=6,
+            cursor="hand2"
+        )
+        en_btn.pack(side="left", padx=(0, 12))
+        
+        id_btn = tk.Button(
+            language_frame,
+            text="🇮🇩 Bahasa Indonesia",
+            command=lambda: self.switch_language("id"),
+            bg="#89b4fa" if current_lang == "id" else self.theme_colors["bg_tertiary"],
+            fg="#1e1e2e" if current_lang == "id" else self.theme_colors["text_secondary"],
+            relief="flat",
+            bd=0,
+            font=("Segoe UI", 9, "bold"),
+            padx=12,
+            pady=6,
+            cursor="hand2"
+        )
+        id_btn.pack(side="left", padx=(0, 12))
+        
+        print("🌐 Language switcher buttons created successfully!")
     
     def create_theme_switcher_direct(self, parent) -> None:
         """Create theme switcher component directly."""
@@ -268,7 +321,7 @@ class MainWindow:
         # Label untuk section
         accounts_label = tk.Label(
             content_frame,
-            text="📋 Daftar Akun GitHub",
+            text=f"📋 {self.language_manager.translate('accounts_list')}",
             font=("Segoe UI", 12, "bold"),
             bg=self.theme_colors["bg_secondary"],
             fg=self.theme_colors["text_primary"],
@@ -297,7 +350,7 @@ class MainWindow:
         # Add account button
         btn_add = UIComponents.create_styled_button(
             button_container,
-            text="➕ Tambah Akun Baru",
+            text=f"➕ {self.language_manager.translate('add_account')}",
             command=self.add_account,
             bg_color=self.theme_colors["accent_blue"],
             fg_color=self.theme_colors["bg_primary"],
@@ -315,20 +368,28 @@ class MainWindow:
         self.root.destroy()
         self.__init__()
     
+    def switch_language(self, language_code: str) -> None:
+        """Handle language switching."""
+        self.language_manager.set_language(language_code)
+        # Restart the application to apply new language
+        self.root.destroy()
+        self.__init__()
+    
     def add_account(self) -> None:
         """Show add account form."""
         AccountForm(
             self.root,
             self.theme_colors,
             self.save_account,
-            self.cancel_account_form
+            self.cancel_account_form,
+            language_manager=self.language_manager
         )
     
     def edit_account(self, account_key: str) -> None:
         """Show edit account form."""
         account_data = self.account_manager.get_account(account_key)
         if not account_data:
-            UIComponents.show_error_dialog("Error", "Akun tidak ditemukan!")
+            UIComponents.show_error_dialog(self.language_manager.translate('error'), self.language_manager.translate('account_not_found'))
             return
         
         # Add key to data for editing
@@ -340,7 +401,8 @@ class MainWindow:
             self.theme_colors,
             self.save_account,
             self.cancel_account_form,
-            edit_data
+            edit_data,
+            language_manager=self.language_manager
         )
     
     def save_account(self, form_data: Dict[str, Any], account_key: Optional[str] = None) -> None:
@@ -353,10 +415,10 @@ class MainWindow:
             success, message, new_key = self.account_manager.add_account(form_data)
         
         if success:
-            UIComponents.show_info_dialog("✅ Berhasil", message)
+            UIComponents.show_info_dialog(f"✅ {self.language_manager.translate('success')}", message)
             self.refresh_ui()
         else:
-            UIComponents.show_error_dialog("Error", message)
+            UIComponents.show_error_dialog(self.language_manager.translate('error'), message)
     
     def cancel_account_form(self) -> None:
         """Handle account form cancellation."""
@@ -369,11 +431,11 @@ class MainWindow:
             return
         
         result = UIComponents.show_confirm_dialog(
-            "⚠️ Konfirmasi Hapus Akun", 
-            f"Apakah Anda yakin ingin menghapus akun ini?\n\n"
-            f"👤 Nama: {account_data['name']}\n"
-            f"📧 Email: {account_data['email']}\n\n"
-            f"⚠️ Tindakan ini tidak dapat dibatalkan!"
+            f"⚠️ {self.language_manager.translate('confirm_delete')}", 
+            f"{self.language_manager.translate('confirm_delete_message')}\n\n"
+            f"👤 {self.language_manager.translate('name')}: {account_data['name']}\n"
+            f"📧 {self.language_manager.translate('email')}: {account_data['email']}\n\n"
+            f"⚠️ {self.language_manager.translate('action_cannot_undo')}"
         )
         
         if result:
@@ -383,10 +445,10 @@ class MainWindow:
         """Delete an account."""
         success, message = self.account_manager.delete_account(account_key)
         if success:
-            UIComponents.show_info_dialog("✅ Berhasil", message)
+            UIComponents.show_info_dialog(f"✅ {self.language_manager.translate('success')}", message)
             self.refresh_ui()
         else:
-            UIComponents.show_error_dialog("Error", message)
+            UIComponents.show_error_dialog(self.language_manager.translate('error'), message)
     
     def switch_to_account(self, account_key: str, account_data: Dict[str, Any]) -> None:
         """Switch to a specific account."""
@@ -394,26 +456,26 @@ class MainWindow:
             self.git_manager.switch_to_account(account_key, account_data)
             
             # Show success message
-            success_msg = f"✅ Git Account Switched Successfully!\n\n"
-            success_msg += f"👤 Name: {account_data['name']}\n"
-            success_msg += f"📧 Email: {account_data['email']}\n"
+            success_msg = f"✅ {self.language_manager.translate('account_switched_success')}\n\n"
+            success_msg += f"👤 {self.language_manager.translate('name')}: {account_data['name']}\n"
+            success_msg += f"📧 {self.language_manager.translate('email')}: {account_data['email']}\n"
             
             if "username" in account_data and account_data["username"]:
                 success_msg += f"🐙 GitHub: @{account_data['username']}\n"
             
             if "token" in account_data and account_data["token"]:
-                success_msg += "🔑 Token: Configured for automatic login\n"
-                success_msg += "🚀 Ready for git clone, push, pull without login!"
+                success_msg += f"🔑 {self.language_manager.translate('token_configured')}\n"
+                success_msg += f"🚀 {self.language_manager.translate('ready_for_git')}"
             else:
-                success_msg += "⚠️ No token configured - may need manual login"
+                success_msg += f"⚠️ {self.language_manager.translate('no_token_warning')}"
             
-            UIComponents.show_info_dialog("✅ Account Switched", success_msg)
+            UIComponents.show_info_dialog(f"✅ {self.language_manager.translate('account_switched')}", success_msg)
             self.refresh_ui()
             
         except Exception as e:
-            error_msg = f"❌ Failed to switch account:\n{str(e)}"
+            error_msg = f"❌ {self.language_manager.translate('failed_to_switch')}:\n{str(e)}"
             print(error_msg)
-            UIComponents.show_error_dialog("❌ Switch Failed", error_msg)
+            UIComponents.show_error_dialog(f"❌ {self.language_manager.translate('switch_failed')}", error_msg)
     
     def refresh_ui(self) -> None:
         """Refresh the UI with current account data."""
@@ -460,7 +522,7 @@ class MainWindow:
         
         empty_label = tk.Label(
             empty_frame,
-            text="Belum ada akun GitHub",
+            text=self.language_manager.translate("no_accounts"),
             font=("Segoe UI", 14, "bold"),
             bg=self.theme_colors["bg_primary"],
             fg=self.theme_colors["text_muted"]
@@ -469,7 +531,7 @@ class MainWindow:
         
         empty_desc = tk.Label(
             empty_frame,
-            text="Klik tombol 'Tambah Akun Baru' untuk memulai",
+            text=self.language_manager.translate("no_accounts_desc"),
             font=("Segoe UI", 10),
             bg=self.theme_colors["bg_primary"],
             fg=self.theme_colors["text_muted"]
@@ -503,7 +565,7 @@ class MainWindow:
         
         # Status badge
         status_color = self.theme_colors["accent_green"] if is_active else self.theme_colors["text_muted"]
-        status_text = "🟢 AKTIF" if is_active else "⚪ TIDAK AKTIF"
+        status_text = f"🟢 {self.language_manager.translate('status_active')}" if is_active else f"⚪ {self.language_manager.translate('status_inactive')}"
         
         status_label = tk.Label(
             info_frame,
@@ -655,7 +717,7 @@ class MainWindow:
         
         switch_btn = UIComponents.create_styled_button(
             left_button_frame,
-            text="🔄 Aktifkan" if not is_active else "✅ Sedang Aktif",
+            text=f"🔄 {self.language_manager.translate('activate')}" if not is_active else f"✅ {self.language_manager.translate('currently_active')}",
             command=lambda: self.switch_to_account(acc_key, data) if not is_active else None,
             bg_color="#89b4fa" if not is_active else "#a6e3a1",
             fg_color="#1e1e2e",

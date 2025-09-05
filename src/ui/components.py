@@ -201,6 +201,76 @@ class UIComponents:
         return theme_frame
     
     @staticmethod
+    def create_language_switcher(parent, current_language: str, on_language_change: Callable,
+                                theme_colors: Dict[str, str]) -> tk.Frame:
+        """
+        Create a language switcher component.
+        
+        Args:
+            parent: Parent widget
+            current_language: Current language setting
+            on_language_change: Callback for language changes
+            theme_colors: Theme colors dictionary
+            
+        Returns:
+            Language switcher frame
+        """
+        language_frame = tk.Frame(parent, bg=theme_colors["bg_secondary"])
+        
+        # Language label
+        language_label = tk.Label(
+            language_frame,
+            text="🌐 Bahasa:",
+            font=("Segoe UI", 10, "bold"),
+            bg=theme_colors["bg_secondary"],
+            fg=theme_colors["text_secondary"]
+        )
+        language_label.pack(side="left", padx=(0, 15))
+        
+        # Language options
+        languages = [
+            ("🇺🇸 English", "en", "English"),
+            ("🇮🇩 Bahasa Indonesia", "id", "Bahasa Indonesia")
+        ]
+        
+        for text, lang_key, tooltip in languages:
+            # Create button directly
+            is_active = (current_language == lang_key)
+            switch_bg = theme_colors["accent_blue"] if is_active else theme_colors["bg_tertiary"]
+            switch_fg = theme_colors["bg_primary"] if is_active else theme_colors["text_secondary"]
+            
+            btn = tk.Button(
+                language_frame,
+                text=text,
+                command=lambda l=lang_key: on_language_change(l),
+                bg=switch_bg,
+                fg=switch_fg,
+                relief="flat",
+                bd=0,
+                font=("Segoe UI", 9, "bold"),
+                padx=12,
+                pady=6,
+                cursor="hand2"
+            )
+            btn.pack(side="left", padx=(0, 12))
+            
+            # Add hover effects
+            def create_hover_effect(button, normal_color, hover_color):
+                def on_enter(e):
+                    button.config(bg=hover_color)
+                def on_leave(e):
+                    button.config(bg=normal_color)
+                button.bind("<Enter>", on_enter)
+                button.bind("<Leave>", on_leave)
+            
+            create_hover_effect(btn, switch_bg, theme_colors["hover_blue"])
+            
+            # Add tooltip
+            UIComponents.create_tooltip(btn, tooltip, theme_colors)
+        
+        return language_frame
+    
+    @staticmethod
     def create_scrollable_frame(parent, theme_colors: Dict[str, str]) -> tuple:
         """
         Create a scrollable frame with canvas and scrollbar.
