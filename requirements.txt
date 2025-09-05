@@ -1,0 +1,37 @@
+# Git Account Manager Pro v2.0.0 - Requirements
+# Professional Git account management tool with modular architecture
+
+# Core Requirements
+# Python >= 3.6 (required for f-strings and type hints)
+
+# Standard Library Dependencies (included with Python)
+# - tkinter (GUI framework)
+# - json (configuration and data storage)
+# - os (file system operations)
+# - subprocess (command execution)
+# - typing (type hints support)
+# - re (regular expressions for validation)
+
+# Optional Dependencies (for enhanced functionality)
+# - pyperclip (for clipboard operations - optional, has fallback)
+#   Install with: pip install pyperclip
+
+# System Requirements
+# - Git (must be installed and accessible from command line)
+# - Windows 10/11 (for system theme detection)
+# - Linux/macOS (basic theme support)
+
+# Development Dependencies (optional)
+# - pytest (for testing)
+# - black (for code formatting)
+# - flake8 (for linting)
+# - mypy (for type checking)
+
+# Installation Instructions:
+# 1. Ensure Python 3.6+ is installed
+# 2. Install Git and ensure it's in PATH
+# 3. Optional: pip install pyperclip for enhanced clipboard support
+# 4. Run: python main.py
+
+# Project Structure: Modular architecture with src/ directory containing
+# config/, core/, ui/, and utils/ modules for clean separation of concerns
