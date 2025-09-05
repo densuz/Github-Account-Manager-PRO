@@ -147,7 +147,7 @@ def create_distribution():
     
     # Create version info file
     version_info = """Git Account Manager Pro v2.1.0
-Build Date: January 6, 2025
+Build Date: September 6, 2025
 
 Features:
 - Multi-language support (English & Bahasa Indonesia)

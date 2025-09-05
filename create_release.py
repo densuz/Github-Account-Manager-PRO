@@ -78,7 +78,7 @@ def create_github_release():
     version = "v2.1.0"
     
     print(f"\n🏷️ Version: {version}")
-    print(f"📅 Release Date: January 6, 2025")
+    print(f"📅 Release Date: September 6, 2025")
     
     print("\n📝 Release Title:")
     print("Git Account Manager Pro v2.1.0 - Multi-Language Support")

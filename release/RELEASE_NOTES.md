@@ -1,7 +1,7 @@
 # Git Account Manager Pro - Release Notes
 
 ## Version 2.1.0 - Language Support Update
-**Release Date:** January 6, 2025
+**Release Date:** September 6, 2025
 
 ### 🌐 New Features
 
@@ -119,4 +119,4 @@ For issues, feature requests, or questions:
 **Download:** [GitHub Releases](https://github.com/densuz/Github-Account-Manager-PRO.git/releases)
 **Documentation:** See README.md for detailed setup instructions
 **Version:** 2.1.0
-**Build Date:** January 6, 2025
+**Build Date:** September 6, 2025

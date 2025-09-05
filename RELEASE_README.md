@@ -113,7 +113,7 @@ This release includes the new **Multi-Language Support** feature with English an
 
 - **GitHub Repository**: [Github-Account-Manager-PRO](https://github.com/densuz/Github-Account-Manager-PRO)
 - **Version**: 2.1.0
-- **Release Date**: January 6, 2025
+- **Release Date**: September 6, 2025
 - **License**: Open Source
 
 ## 🎯 What's Next

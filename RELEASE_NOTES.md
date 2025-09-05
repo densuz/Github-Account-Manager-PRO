@@ -1,7 +1,7 @@
 # Git Account Manager Pro - Release Notes
 
 ## Version 2.1.0 - Language Support Update
-**Release Date:** January 6, 2025
+**Release Date:** September 6, 2025
 
 ### 🌐 New Features
 
