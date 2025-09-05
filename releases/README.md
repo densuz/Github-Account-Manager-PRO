@@ -11,7 +11,7 @@
 4. **Selesai!** Program langsung berjalan tanpa perlu install
 
 ### **Metode 2: Download dari GitHub Releases**
-1. **Klik** [Releases](https://github.com/your-username/git-account-manager-pro/releases) di sidebar
+1. **Klik** [Releases](https://github.com/densuz/git-account-manager-pro/releases) di sidebar
 2. **Download** file `GitAccountManagerPro-v2.1.0.exe` dari release terbaru
 3. **Double-click** untuk menjalankan
 
@@ -79,8 +79,8 @@
 
 ## 📞 **Support & Help**
 
-- **GitHub Issues**: [Report Bug](https://github.com/your-username/git-account-manager-pro/issues)
-- **Documentation**: [Full Guide](https://github.com/your-username/git-account-manager-pro/wiki)
+- **GitHub Issues**: [Report Bug](https://github.com/densuz/git-account-manager-pro/issues)
+- **Documentation**: [Full Guide](https://github.com/densuz/git-account-manager-pro/wiki)
 - **Email**: your-email@example.com
 
 ## 📄 **License**
@@ -89,7 +89,7 @@ This software is licensed under the **MIT License**. See [LICENSE.txt](LICENSE.t
 
 ## 🎉 **Download Sekarang!**
 
-[![Download](https://img.shields.io/badge/Download-GitAccountManagerPro.exe-blue?style=for-the-badge&logo=download)](https://github.com/your-username/git-account-manager-pro/releases/latest/download/GitAccountManagerPro.exe)
+[![Download](https://img.shields.io/badge/Download-GitAccountManagerPro.exe-blue?style=for-the-badge&logo=download)](https://github.com/densuz/git-account-manager-pro/releases/latest/download/GitAccountManagerPro.exe)
 
 **Size**: ~25 MB | **Version**: 2.1.0 | **Platform**: Windows 10/11
 

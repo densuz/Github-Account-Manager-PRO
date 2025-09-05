@@ -7,7 +7,7 @@ A professional Git account management tool with modular architecture that allows
 ## 📥 **Download & Install**
 
 ### **🎯 Quick Download (Recommended)**
-[![Download](https://img.shields.io/badge/Download-GitAccountManagerPro.exe-blue?style=for-the-badge&logo=download)](https://github.com/your-username/git-account-manager-pro/releases/latest/download/GitAccountManagerPro.exe)
+[![Download](https://img.shields.io/badge/Download-GitAccountManagerPro.exe-blue?style=for-the-badge&logo=download)](https://github.com/densuz/git-account-manager-pro/releases/latest/download/GitAccountManagerPro.exe)
 
 1. **Click** the download button above
 2. **Save** `GitAccountManagerPro.exe` to your computer
@@ -15,7 +15,7 @@ A professional Git account management tool with modular architecture that allows
 4. **Start** managing your Git accounts immediately
 
 ### **📦 Alternative Download Methods**
-- **GitHub Releases**: [Latest Release](https://github.com/your-username/git-account-manager-pro/releases/latest)
+- **GitHub Releases**: [Latest Release](https://github.com/densuz/git-account-manager-pro/releases/latest)
 - **Source Code**: Clone this repository for development
 
 ## 🚀 Features

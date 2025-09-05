@@ -38,7 +38,7 @@ git push -u origin main
 
 ### 4. Update Download Links
 After creating the release, update these files:
-- `README.md` - Replace `your-username` with your GitHub username
+- `README.md` - Replace `densuz` with your GitHub username
 - `releases/README.md` - Update download links
 - `.github/workflows/build-and-release.yml` - Update repository name
 
