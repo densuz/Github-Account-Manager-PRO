@@ -114,54 +114,66 @@ class PortableLauncher:
             text="Language Selection",
             font=("Segoe UI", 12, "bold"),
             bg="#f8f9fa",
-            fg="#2c3e50"
+            fg="#2c3e50",
+            relief="solid",
+            bd=1
         )
         lang_frame.pack(fill="x", pady=(0, 20))
         
+        # Language container
+        lang_container = tk.Frame(lang_frame, bg="#f8f9fa")
+        lang_container.pack(fill="x", padx=20, pady=15)
+        
         # Language options
-        lang_options_frame = tk.Frame(lang_frame, bg="#f8f9fa")
-        lang_options_frame.pack(fill="x", padx=15, pady=10)
+        lang_options_frame = tk.Frame(lang_container, bg="#f8f9fa")
+        lang_options_frame.pack(fill="x", pady=(0, 10))
         
         # English option
         en_frame = tk.Frame(lang_options_frame, bg="#f8f9fa")
-        en_frame.pack(fill="x", pady=5)
+        en_frame.pack(fill="x", pady=(0, 8))
         
         en_radio = tk.Radiobutton(
             en_frame,
             text="🇺🇸 English",
             variable=self.selected_language,
             value="en",
-            font=("Segoe UI", 11),
+            font=("Segoe UI", 12, "bold"),
             bg="#f8f9fa",
-            fg="#2c3e50"
+            fg="#2c3e50",
+            selectcolor="#f8f9fa",
+            activebackground="#f8f9fa",
+            activeforeground="#2c3e50"
         )
-        en_radio.pack(side="left")
+        en_radio.pack(anchor="w")
         
         # Indonesian option
         id_frame = tk.Frame(lang_options_frame, bg="#f8f9fa")
-        id_frame.pack(fill="x", pady=5)
+        id_frame.pack(fill="x", pady=(0, 8))
         
         id_radio = tk.Radiobutton(
             id_frame,
             text="🇮🇩 Bahasa Indonesia",
             variable=self.selected_language,
             value="id",
-            font=("Segoe UI", 11),
+            font=("Segoe UI", 12, "bold"),
             bg="#f8f9fa",
-            fg="#2c3e50"
+            fg="#2c3e50",
+            selectcolor="#f8f9fa",
+            activebackground="#f8f9fa",
+            activeforeground="#2c3e50"
         )
-        id_radio.pack(side="left")
+        id_radio.pack(anchor="w")
         
         # Detection info
         detected_text = f"Detected system language: {'Bahasa Indonesia' if self.detected_language == 'id' else 'English'}"
         detected_label = tk.Label(
-            lang_options_frame,
+            lang_container,
             text=detected_text,
             font=("Segoe UI", 9),
             bg="#f8f9fa",
             fg="#7f8c8d"
         )
-        detected_label.pack(anchor="w", pady=(10, 0))
+        detected_label.pack(anchor="w", pady=(5, 0))
     
     def create_options_section(self, parent):
         """Create options section."""
@@ -170,9 +182,15 @@ class PortableLauncher:
             text="Launch Options",
             font=("Segoe UI", 12, "bold"),
             bg="#f8f9fa",
-            fg="#2c3e50"
+            fg="#2c3e50",
+            relief="solid",
+            bd=1
         )
         options_frame.pack(fill="x", pady=(0, 20))
+        
+        # Options container
+        options_container = tk.Frame(options_frame, bg="#f8f9fa")
+        options_container.pack(fill="x", padx=20, pady=15)
         
         # Options
         self.create_data_folder = tk.BooleanVar(value=True)
@@ -180,55 +198,82 @@ class PortableLauncher:
         self.auto_close = tk.BooleanVar(value=True)
         
         # Create data folder option
+        data_frame = tk.Frame(options_container, bg="#f8f9fa")
+        data_frame.pack(fill="x", pady=(0, 10))
+        
         data_check = tk.Checkbutton(
-            options_frame,
+            data_frame,
             text="Create portable data folder",
             variable=self.create_data_folder,
-            font=("Segoe UI", 10),
+            font=("Segoe UI", 11, "bold"),
             bg="#f8f9fa",
-            fg="#2c3e50"
+            fg="#2c3e50",
+            selectcolor="#f8f9fa",
+            activebackground="#f8f9fa",
+            activeforeground="#2c3e50"
         )
-        data_check.pack(anchor="w", padx=15, pady=5)
+        data_check.pack(anchor="w")
         
         data_desc = tk.Label(
-            options_frame,
-            text="  • Creates 'data' folder for portable settings",
+            data_frame,
+            text="  • Creates 'data' folder for portable settings and configurations",
             font=("Segoe UI", 9),
             bg="#f8f9fa",
             fg="#7f8c8d"
         )
-        data_desc.pack(anchor="w", padx=15, pady=(0, 5))
+        data_desc.pack(anchor="w", padx=(20, 0))
         
         # Show console option
+        console_frame = tk.Frame(options_container, bg="#f8f9fa")
+        console_frame.pack(fill="x", pady=(0, 10))
+        
         console_check = tk.Checkbutton(
-            options_frame,
+            console_frame,
             text="Show console window",
             variable=self.show_console,
-            font=("Segoe UI", 10),
+            font=("Segoe UI", 11, "bold"),
             bg="#f8f9fa",
-            fg="#2c3e50"
+            fg="#2c3e50",
+            selectcolor="#f8f9fa",
+            activebackground="#f8f9fa",
+            activeforeground="#2c3e50"
         )
-        console_check.pack(anchor="w", padx=15, pady=5)
+        console_check.pack(anchor="w")
         
         console_desc = tk.Label(
-            options_frame,
-            text="  • Useful for debugging and troubleshooting",
+            console_frame,
+            text="  • Useful for debugging and troubleshooting issues",
             font=("Segoe UI", 9),
             bg="#f8f9fa",
             fg="#7f8c8d"
         )
-        console_desc.pack(anchor="w", padx=15, pady=(0, 5))
+        console_desc.pack(anchor="w", padx=(20, 0))
         
         # Auto close option
+        close_frame = tk.Frame(options_container, bg="#f8f9fa")
+        close_frame.pack(fill="x", pady=(0, 5))
+        
         close_check = tk.Checkbutton(
-            options_frame,
+            close_frame,
             text="Close launcher after starting application",
             variable=self.auto_close,
-            font=("Segoe UI", 10),
+            font=("Segoe UI", 11, "bold"),
             bg="#f8f9fa",
-            fg="#2c3e50"
+            fg="#2c3e50",
+            selectcolor="#f8f9fa",
+            activebackground="#f8f9fa",
+            activeforeground="#2c3e50"
         )
-        close_check.pack(anchor="w", padx=15, pady=5)
+        close_check.pack(anchor="w")
+        
+        close_desc = tk.Label(
+            close_frame,
+            text="  • Automatically closes this launcher when the application starts",
+            font=("Segoe UI", 9),
+            bg="#f8f9fa",
+            fg="#7f8c8d"
+        )
+        close_desc.pack(anchor="w", padx=(20, 0))
     
     def create_buttons(self, parent):
         """Create action buttons."""
