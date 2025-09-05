@@ -98,33 +98,43 @@ class InstallerGUI:
         """Create installation type selection."""
         type_frame = tk.LabelFrame(
             parent,
-            text="Installation Type",
-            font=("Segoe UI", 12, "bold"),
-            bg="#f0f0f0",
+            text="⚙️ Installation Type",
+            font=("Segoe UI", 13, "bold"),
+            bg="#f8f9fa",
             fg="#2c3e50",
             relief="solid",
-            bd=1
+            bd=2
         )
         type_frame.pack(fill="x", pady=(0, 20))
         
         # Type container
-        type_container = tk.Frame(type_frame, bg="#f0f0f0")
-        type_container.pack(fill="x", padx=20, pady=15)
+        type_container = tk.Frame(type_frame, bg="#f8f9fa")
+        type_container.pack(fill="x", padx=25, pady=20)
+        
+        # Title label
+        title_label = tk.Label(
+            type_container,
+            text="Choose Installation Method",
+            font=("Segoe UI", 12, "bold"),
+            bg="#f8f9fa",
+            fg="#2c3e50"
+        )
+        title_label.pack(anchor="w", pady=(0, 15))
         
         # Portable option
-        portable_frame = tk.Frame(type_container, bg="#f0f0f0")
+        portable_frame = tk.Frame(type_container, bg="#f8f9fa")
         portable_frame.pack(fill="x", pady=(0, 15))
         
         portable_radio = tk.Radiobutton(
             portable_frame,
-            text="Portable Installation",
+            text="📦 Portable Installation",
             variable=self.install_type,
             value="portable",
             font=("Segoe UI", 12, "bold"),
-            bg="#f0f0f0",
+            bg="#f8f9fa",
             fg="#2c3e50",
-            selectcolor="#f0f0f0",
-            activebackground="#f0f0f0",
+            selectcolor="#f8f9fa",
+            activebackground="#f8f9fa",
             activeforeground="#2c3e50",
             command=self.on_install_type_change
         )
@@ -132,28 +142,28 @@ class InstallerGUI:
         
         portable_desc = tk.Label(
             portable_frame,
-            text="• No system installation required\n• Run from any folder\n• No registry changes\n• Easy to uninstall",
-            font=("Segoe UI", 9),
-            bg="#f0f0f0",
+            text="  • No system installation required\n  • Run from any folder\n  • No registry changes\n  • Easy to uninstall",
+            font=("Segoe UI", 10),
+            bg="#f8f9fa",
             fg="#7f8c8d",
             justify="left"
         )
         portable_desc.pack(anchor="w", padx=(25, 0), pady=(5, 0))
         
         # Full installation option
-        full_frame = tk.Frame(type_container, bg="#f0f0f0")
+        full_frame = tk.Frame(type_container, bg="#f8f9fa")
         full_frame.pack(fill="x", pady=(0, 5))
         
         full_radio = tk.Radiobutton(
             full_frame,
-            text="Full Installation",
+            text="🏠 Full Installation",
             variable=self.install_type,
             value="full",
             font=("Segoe UI", 12, "bold"),
-            bg="#f0f0f0",
+            bg="#f8f9fa",
             fg="#2c3e50",
-            selectcolor="#f0f0f0",
-            activebackground="#f0f0f0",
+            selectcolor="#f8f9fa",
+            activebackground="#f8f9fa",
             activeforeground="#2c3e50",
             command=self.on_install_type_change
         )
@@ -161,9 +171,9 @@ class InstallerGUI:
         
         full_desc = tk.Label(
             full_frame,
-            text="• Install to Program Files\n• Desktop and Start Menu shortcuts\n• Windows integration\n• Proper uninstaller",
-            font=("Segoe UI", 9),
-            bg="#f0f0f0",
+            text="  • Install to Program Files\n  • Desktop and Start Menu shortcuts\n  • Windows integration\n  • Proper uninstaller",
+            font=("Segoe UI", 10),
+            bg="#f8f9fa",
             fg="#7f8c8d",
             justify="left"
         )
@@ -173,68 +183,88 @@ class InstallerGUI:
         """Create installation path section."""
         path_frame = tk.LabelFrame(
             parent,
-            text="Installation Location",
-            font=("Segoe UI", 12, "bold"),
-            bg="#f0f0f0",
+            text="📁 Installation Location",
+            font=("Segoe UI", 13, "bold"),
+            bg="#f8f9fa",
             fg="#2c3e50",
             relief="solid",
-            bd=1
+            bd=2
         )
         path_frame.pack(fill="x", pady=(0, 20))
         
-        # Path input
-        path_input_frame = tk.Frame(path_frame, bg="#f0f0f0")
-        path_input_frame.pack(fill="x", padx=20, pady=15)
+        # Path input container
+        path_container = tk.Frame(path_frame, bg="#f8f9fa")
+        path_container.pack(fill="x", padx=25, pady=20)
         
+        # Title label
+        title_label = tk.Label(
+            path_container,
+            text="Choose Installation Directory",
+            font=("Segoe UI", 12, "bold"),
+            bg="#f8f9fa",
+            fg="#2c3e50"
+        )
+        title_label.pack(anchor="w", pady=(0, 10))
+        
+        # Path input frame
+        path_input_frame = tk.Frame(path_container, bg="#f8f9fa")
+        path_input_frame.pack(fill="x", pady=(0, 10))
+        
+        # Path label
         path_label = tk.Label(
             path_input_frame,
             text="Install to:",
             font=("Segoe UI", 11, "bold"),
-            bg="#f0f0f0",
-            fg="#2c3e50"
+            bg="#f8f9fa",
+            fg="#34495e"
         )
         path_label.pack(anchor="w", pady=(0, 8))
         
-        path_entry_frame = tk.Frame(path_input_frame, bg="#f0f0f0")
-        path_entry_frame.pack(fill="x", pady=(0, 8))
+        # Entry and button frame
+        entry_button_frame = tk.Frame(path_input_frame, bg="#f8f9fa")
+        entry_button_frame.pack(fill="x")
         
+        # Path entry
         self.path_entry = tk.Entry(
-            path_entry_frame,
+            entry_button_frame,
             textvariable=self.install_path,
-            font=("Segoe UI", 10),
+            font=("Segoe UI", 11),
             state="readonly",
             relief="solid",
-            bd=1,
+            bd=2,
             bg="white",
-            fg="#2c3e50"
+            fg="#2c3e50",
+            insertbackground="#2c3e50"
         )
-        self.path_entry.pack(side="left", fill="x", expand=True, padx=(0, 10))
+        self.path_entry.pack(side="left", fill="x", expand=True, padx=(0, 12))
         
+        # Browse button
         browse_btn = tk.Button(
-            path_entry_frame,
-            text="Browse...",
+            entry_button_frame,
+            text="📂 Browse...",
             command=self.browse_path,
-            font=("Segoe UI", 9, "bold"),
+            font=("Segoe UI", 10, "bold"),
             bg="#3498db",
             fg="white",
             relief="flat",
-            padx=20,
-            pady=5,
-            cursor="hand2"
+            padx=25,
+            pady=8,
+            cursor="hand2",
+            bd=0
         )
         browse_btn.pack(side="right")
         
         # Path description
         path_desc = tk.Label(
-            path_input_frame,
-            text="Choose where to install Git Account Manager Pro on your computer.",
-            font=("Segoe UI", 9),
-            bg="#f0f0f0",
+            path_container,
+            text="💡 Choose where to install Git Account Manager Pro on your computer.\n   The application will be installed in the selected directory.",
+            font=("Segoe UI", 10),
+            bg="#f8f9fa",
             fg="#7f8c8d",
-            wraplength=450,
+            wraplength=500,
             justify="left"
         )
-        path_desc.pack(anchor="w")
+        path_desc.pack(anchor="w", pady=(10, 0))
         
         # Set default path
         self.set_default_path()
@@ -243,32 +273,42 @@ class InstallerGUI:
         """Create installation options."""
         options_frame = tk.LabelFrame(
             parent,
-            text="Installation Options",
-            font=("Segoe UI", 12, "bold"),
-            bg="#f0f0f0",
+            text="🔧 Installation Options",
+            font=("Segoe UI", 13, "bold"),
+            bg="#f8f9fa",
             fg="#2c3e50",
             relief="solid",
-            bd=1
+            bd=2
         )
         options_frame.pack(fill="x", pady=(0, 20))
         
         # Options container
-        options_container = tk.Frame(options_frame, bg="#f0f0f0")
-        options_container.pack(fill="x", padx=20, pady=15)
+        options_container = tk.Frame(options_frame, bg="#f8f9fa")
+        options_container.pack(fill="x", padx=25, pady=20)
+        
+        # Title label
+        title_label = tk.Label(
+            options_container,
+            text="Additional Installation Options",
+            font=("Segoe UI", 12, "bold"),
+            bg="#f8f9fa",
+            fg="#2c3e50"
+        )
+        title_label.pack(anchor="w", pady=(0, 15))
         
         # Desktop shortcut
-        desktop_frame = tk.Frame(options_container, bg="#f0f0f0")
-        desktop_frame.pack(fill="x", pady=(0, 10))
+        desktop_frame = tk.Frame(options_container, bg="#f8f9fa")
+        desktop_frame.pack(fill="x", pady=(0, 12))
         
         desktop_check = tk.Checkbutton(
             desktop_frame,
-            text="Create Desktop Shortcut",
+            text="🖥️ Create Desktop Shortcut",
             variable=self.create_desktop_shortcut,
             font=("Segoe UI", 11, "bold"),
-            bg="#f0f0f0",
+            bg="#f8f9fa",
             fg="#2c3e50",
-            selectcolor="#f0f0f0",
-            activebackground="#f0f0f0",
+            selectcolor="#f8f9fa",
+            activebackground="#f8f9fa",
             activeforeground="#2c3e50"
         )
         desktop_check.pack(anchor="w")
@@ -276,25 +316,25 @@ class InstallerGUI:
         desktop_desc = tk.Label(
             desktop_frame,
             text="  • Creates a shortcut on your desktop for easy access",
-            font=("Segoe UI", 9),
-            bg="#f0f0f0",
+            font=("Segoe UI", 10),
+            bg="#f8f9fa",
             fg="#7f8c8d"
         )
-        desktop_desc.pack(anchor="w", padx=(20, 0))
+        desktop_desc.pack(anchor="w", padx=(25, 0))
         
         # Start Menu shortcut
-        startmenu_frame = tk.Frame(options_container, bg="#f0f0f0")
-        startmenu_frame.pack(fill="x", pady=(0, 10))
+        startmenu_frame = tk.Frame(options_container, bg="#f8f9fa")
+        startmenu_frame.pack(fill="x", pady=(0, 12))
         
         startmenu_check = tk.Checkbutton(
             startmenu_frame,
-            text="Create Start Menu Entry",
+            text="📋 Create Start Menu Entry",
             variable=self.create_start_menu,
             font=("Segoe UI", 11, "bold"),
-            bg="#f0f0f0",
+            bg="#f8f9fa",
             fg="#2c3e50",
-            selectcolor="#f0f0f0",
-            activebackground="#f0f0f0",
+            selectcolor="#f8f9fa",
+            activebackground="#f8f9fa",
             activeforeground="#2c3e50"
         )
         startmenu_check.pack(anchor="w")
@@ -302,11 +342,11 @@ class InstallerGUI:
         startmenu_desc = tk.Label(
             startmenu_frame,
             text="  • Adds the application to your Start Menu Programs folder",
-            font=("Segoe UI", 9),
-            bg="#f0f0f0",
+            font=("Segoe UI", 10),
+            bg="#f8f9fa",
             fg="#7f8c8d"
         )
-        startmenu_desc.pack(anchor="w", padx=(20, 0))
+        startmenu_desc.pack(anchor="w", padx=(25, 0))
     
     def create_buttons(self, parent):
         """Create action buttons."""
