@@ -1,0 +1,19 @@
+Git Account Manager Pro v2.1.0
+Build Date: January 6, 2025
+
+Features:
+- Multi-language support (English & Bahasa Indonesia)
+- Theme switching (Dark, Light, System)
+- Git account management
+- Easy account switching
+
+System Requirements:
+- Windows 10/11
+- Git (for account management features)
+
+Installation:
+1. Download and extract this package
+2. Run GitAccountManagerPro.exe
+3. No additional installation required
+
+For support and updates, visit the GitHub repository.
