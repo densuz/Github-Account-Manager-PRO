@@ -2,6 +2,7 @@
 Main window for Git Account Manager Pro.
 """
 
+import os
 import tkinter as tk
 from tkinter import ttk
 from typing import Dict, Any, Optional
@@ -41,6 +42,14 @@ class MainWindow:
             self.root.configure(bg=self.theme_colors["bg_primary"])
             self.root.resizable(True, True)
             
+            # Set application icon
+            try:
+                icon_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'assets', 'app_icon.ico')
+                if os.path.exists(icon_path):
+                    self.root.iconbitmap(icon_path)
+            except Exception:
+                pass  # Icon setting is optional
+            
             # Set minimum size
             self.root.minsize(600, 500)
             
@@ -78,13 +87,32 @@ class MainWindow:
         title_frame = tk.Frame(header_frame, bg=self.theme_colors["bg_secondary"])
         title_frame.pack(pady=20)
         
-        header_icon = tk.Label(
-            title_frame,
-            text="🚀",
-            font=("Segoe UI Emoji", 24),
-            bg=self.theme_colors["bg_secondary"],
-            fg=self.theme_colors["text_primary"]
-        )
+        # Try to load professional icon, fallback to emoji
+        try:
+            icon_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'assets', 'app_icon_64x64.png')
+            if os.path.exists(icon_path):
+                # Load and display the professional icon
+                from PIL import Image, ImageTk
+                icon_img = Image.open(icon_path)
+                icon_photo = ImageTk.PhotoImage(icon_img)
+                header_icon = tk.Label(
+                    title_frame,
+                    image=icon_photo,
+                    bg=self.theme_colors["bg_secondary"]
+                )
+                header_icon.image = icon_photo  # Keep a reference
+            else:
+                raise FileNotFoundError("Icon not found")
+        except Exception:
+            # Fallback to emoji if icon loading fails
+            header_icon = tk.Label(
+                title_frame,
+                text="🔐",
+                font=("Segoe UI Emoji", 24),
+                bg=self.theme_colors["bg_secondary"],
+                fg=self.theme_colors["text_primary"]
+            )
+        
         header_icon.pack(side="left", padx=(0, 10))
         
         header = tk.Label(

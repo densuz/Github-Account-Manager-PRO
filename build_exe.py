@@ -38,6 +38,7 @@ a = Analysis(
     datas=[
         ('src', 'src'),
         ('data', 'data'),
+        ('assets', 'assets'),
         ('README.md', '.'),
         ('RELEASE_NOTES.md', '.'),
     ],
@@ -82,7 +83,7 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon=None,
+    icon='assets/app_icon.ico',
 )
 '''
     
