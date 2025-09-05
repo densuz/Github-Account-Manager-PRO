@@ -192,6 +192,84 @@ if errorlevel 1 (
     
     return True
 
+def create_installer_packages():
+    """Create installer packages."""
+    print("📦 Creating installer packages...")
+    
+    # Create portable package
+    portable_dir = Path("portable")
+    if portable_dir.exists():
+        shutil.rmtree(portable_dir)
+    portable_dir.mkdir()
+    
+    # Copy files for portable
+    files_to_copy = [
+        "GitAccountManagerPro.exe",
+        "README.md",
+        "RELEASE_NOTES.md",
+        "VERSION.txt",
+        "LICENSE.txt"
+    ]
+    
+    for file in files_to_copy:
+        if Path(file).exists():
+            shutil.copy2(file, portable_dir / file)
+            print(f"✅ {file} copied to portable folder")
+    
+    # Copy installer scripts
+    installer_files = [
+        "installer.py",
+        "portable_launcher.py"
+    ]
+    
+    for file in installer_files:
+        if Path(file).exists():
+            shutil.copy2(file, portable_dir / file)
+            print(f"✅ {file} copied to portable folder")
+    
+    # Create portable launcher batch
+    launcher_bat = """@echo off
+echo Starting Git Account Manager Pro - Portable Launcher...
+echo.
+python portable_launcher.py
+if errorlevel 1 (
+    echo.
+    echo Launcher encountered an error.
+    echo Please ensure Python is installed and try again.
+    pause
+)
+"""
+    
+    with open(portable_dir / "launch_portable.bat", 'w', encoding='utf-8') as f:
+        f.write(launcher_bat)
+    
+    print("✅ Portable launcher batch file created")
+    
+    # Create installer package
+    installer_dir = Path("installer_package")
+    if installer_dir.exists():
+        shutil.rmtree(installer_dir)
+    installer_dir.mkdir()
+    
+    # Copy files for installer
+    for file in files_to_copy:
+        if Path(file).exists():
+            shutil.copy2(file, installer_dir / file)
+            print(f"✅ {file} copied to installer folder")
+    
+    # Copy installer scripts
+    for file in installer_files:
+        if Path(file).exists():
+            shutil.copy2(file, installer_dir / file)
+            print(f"✅ {file} copied to installer folder")
+    
+    # Copy NSIS script
+    if Path("installer.nsi").exists():
+        shutil.copy2("installer.nsi", installer_dir / "installer.nsi")
+        print("✅ NSIS installer script copied")
+    
+    return True
+
 def main():
     """Main build process."""
     print("🚀 Git Account Manager Pro - Build Script")
@@ -212,10 +290,18 @@ def main():
     if not create_distribution():
         return 1
     
+    # Create installer packages
+    if not create_installer_packages():
+        return 1
+    
     print("\n🎉 Build completed successfully!")
     print("📁 Release files are in the 'release' folder")
+    print("📁 Portable package is in the 'portable' folder")
+    print("📁 Installer package is in the 'installer_package' folder")
     print("📄 Executable: release/GitAccountManagerPro.exe")
     print("📄 Run script: release/run.bat")
+    print("📄 Portable launcher: portable/launch_portable.bat")
+    print("📄 Full installer: installer_package/installer.py")
     
     return 0
 
