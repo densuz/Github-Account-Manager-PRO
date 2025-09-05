@@ -98,15 +98,9 @@ All packages include **automatic language detection**:
 
 ## 🛠️ Advanced Installation
 
-### NSIS Professional Installer
+### Note: Professional Installer Removed
 
-For users who want a professional Windows installer:
-
-1. **Install NSIS** from https://nsis.sourceforge.io/
-2. **Extract** the installer package
-3. **Right-click** on `installer.nsi`
-4. **Select** "Compile NSIS Script"
-5. **Run** the generated `GitAccountManagerPro-Setup.exe`
+The NSIS professional installer has been removed from this project. Please use the portable version or run the executable directly.
 
 ### Direct Executable Launch
 
