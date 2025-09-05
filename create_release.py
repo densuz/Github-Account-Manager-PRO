@@ -144,8 +144,8 @@ exit /b 0
 
 ## 📞 **Support & Help**
 
-- **GitHub Issues**: [Report Bug](https://github.com/densuz/git-account-manager-pro/issues)
-- **Documentation**: [Full Guide](https://github.com/densuz/git-account-manager-pro/wiki)
+- **GitHub Issues**: [Report Bug](https://github.com/densuz/Github-Account-Manager-PRO/issues)
+- **Documentation**: [Full Guide](https://github.com/densuz/Github-Account-Manager-PRO/wiki)
 
 ## 📄 **License**
 
