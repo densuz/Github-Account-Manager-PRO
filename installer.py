@@ -164,45 +164,65 @@ class InstallerGUI:
             text="Installation Location",
             font=("Segoe UI", 12, "bold"),
             bg="#f0f0f0",
-            fg="#2c3e50"
+            fg="#2c3e50",
+            relief="solid",
+            bd=1
         )
         path_frame.pack(fill="x", pady=(0, 20))
         
         # Path input
         path_input_frame = tk.Frame(path_frame, bg="#f0f0f0")
-        path_input_frame.pack(fill="x", padx=15, pady=10)
+        path_input_frame.pack(fill="x", padx=20, pady=15)
         
         path_label = tk.Label(
             path_input_frame,
             text="Install to:",
-            font=("Segoe UI", 10),
+            font=("Segoe UI", 11, "bold"),
             bg="#f0f0f0",
             fg="#2c3e50"
         )
-        path_label.pack(anchor="w")
+        path_label.pack(anchor="w", pady=(0, 8))
         
         path_entry_frame = tk.Frame(path_input_frame, bg="#f0f0f0")
-        path_entry_frame.pack(fill="x", pady=(5, 0))
+        path_entry_frame.pack(fill="x", pady=(0, 8))
         
         self.path_entry = tk.Entry(
             path_entry_frame,
             textvariable=self.install_path,
             font=("Segoe UI", 10),
-            state="readonly"
+            state="readonly",
+            relief="solid",
+            bd=1,
+            bg="white",
+            fg="#2c3e50"
         )
-        self.path_entry.pack(side="left", fill="x", expand=True)
+        self.path_entry.pack(side="left", fill="x", expand=True, padx=(0, 10))
         
         browse_btn = tk.Button(
             path_entry_frame,
             text="Browse...",
             command=self.browse_path,
-            font=("Segoe UI", 9),
+            font=("Segoe UI", 9, "bold"),
             bg="#3498db",
             fg="white",
             relief="flat",
-            padx=15
+            padx=20,
+            pady=5,
+            cursor="hand2"
         )
-        browse_btn.pack(side="right", padx=(10, 0))
+        browse_btn.pack(side="right")
+        
+        # Path description
+        path_desc = tk.Label(
+            path_input_frame,
+            text="Choose where to install Git Account Manager Pro on your computer.",
+            font=("Segoe UI", 9),
+            bg="#f0f0f0",
+            fg="#7f8c8d",
+            wraplength=450,
+            justify="left"
+        )
+        path_desc.pack(anchor="w")
         
         # Set default path
         self.set_default_path()
